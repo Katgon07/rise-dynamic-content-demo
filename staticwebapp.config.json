@@ -1,0 +1,6 @@
+{
+  "globalHeaders": {
+    "Content-Security-Policy": "frame-ancestors *",
+    "Cache-Control": "no-cache, must-revalidate"
+  }
+}
