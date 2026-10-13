@@ -1,11 +1,578 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Dynamic content test</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
-<style>body{font-family:Lato,Arial,sans-serif;margin:0;padding:28px;background:#f5f9fd;color:#183153}.card{max-width:760px;margin:auto;background:#fff;border:1px solid #d9e9f5;border-radius:18px;padding:30px;box-shadow:0 10px 30px #122c5010}h1{color:#0078d4;font-size:28px;margin-top:0}p{font-size:17px;line-height:1.55}button{background:#0078d4;border:0;border-radius:10px;color:#fff;font:700 16px Lato,Arial,sans-serif;padding:14px 22px;cursor:pointer}#message{margin-top:16px;font-weight:700;color:#136b4b}</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How Copilot and agents fit into everyday work</title>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 28px 18px;
+      background: #f5f7fa;
+      color: #243247;
+      font-family: "Lato", Arial, sans-serif;
+    }
+
+    button,
+    div,
+    span,
+    p,
+    h1,
+    h2,
+    h3 {
+      font-family: "Lato", Arial, sans-serif;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .experience-wrapper {
+      width: 100%;
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    /* INTRO */
+    .intro {
+      text-align: center;
+      margin-bottom: 26px;
+    }
+
+    .intro-label {
+      display: inline-block;
+      margin-bottom: 10px;
+      padding: 6px 11px;
+      border-radius: 100px;
+      background: #e9f3fc;
+      color: #245b88;
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+    }
+
+    .intro h1 {
+      margin: 0 0 9px;
+      color: #172a46;
+      font-size: 28px;
+      font-weight: 900;
+      line-height: 1.2;
+    }
+
+    .intro p {
+      max-width: 730px;
+      margin: 0 auto;
+      color: #48576b;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    /* SELECTOR */
+    .experience-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .experience-button {
+      min-height: 132px;
+      padding: 20px 18px;
+      border: 1px solid #dfe5ec;
+      border-radius: 16px;
+      background: #ffffff;
+      color: #26384b;
+      cursor: pointer;
+      text-align: left;
+      transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        background 0.2s ease;
+    }
+
+    .experience-button:hover {
+      transform: translateY(-2px);
+      border-color: #8dc0e8;
+    }
+
+    .experience-button:focus-visible {
+      outline: 3px solid #005a9e;
+      outline-offset: 2px;
+    }
+
+    .experience-button.active {
+      border: 2px solid #0078d4;
+      background: #f4f9fd;
+    }
+
+    .experience-number {
+      display: block;
+      margin-bottom: 10px;
+      color: #516176;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 1px;
+    }
+
+    .experience-title {
+      display: block;
+      margin-bottom: 5px;
+      color: #172a46;
+      font-size: 17px;
+      font-weight: 900;
+      line-height: 1.25;
+    }
+
+    .experience-subtitle {
+      display: block;
+      color: #465a70;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .experience-button.active .experience-number,
+    .experience-button.active .experience-title {
+      color: #0067b8;
+    }
+
+    /* DETAIL PANEL */
+    .detail-panel {
+      overflow: hidden;
+      border: 1px solid #e1e7ee;
+      border-radius: 20px;
+      background: #ffffff;
+      box-shadow: 0 8px 26px rgba(31, 41, 55, 0.06);
+    }
+
+    .detail-header {
+      position: relative;
+      overflow: hidden;
+      padding: 28px 30px;
+      color: #ffffff;
+      background:
+        radial-gradient(
+          circle at 12% 22%,
+          rgba(255,255,255,.65) 0 1.5px,
+          transparent 3px
+        ),
+        radial-gradient(
+          circle at 76% 18%,
+          rgba(255,255,255,.45) 0 1.5px,
+          transparent 3px
+        ),
+        radial-gradient(
+          circle at 90% 74%,
+          rgba(255,255,255,.45) 0 2px,
+          transparent 4px
+        ),
+        linear-gradient(
+          135deg,
+          #10294d 0%,
+          #1c477a 100%
+        );
+    }
+
+    .detail-header::after {
+      content: "";
+      position: absolute;
+      width: 360px;
+      height: 360px;
+      border: 1px solid rgba(141, 192, 232, 0.17);
+      border-radius: 50%;
+      right: -220px;
+      bottom: -280px;
+    }
+
+    .detail-kicker {
+      position: relative;
+      z-index: 2;
+      display: inline-block;
+      margin-bottom: 8px;
+      color: #cfe8fb;
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .detail-header h2 {
+      position: relative;
+      z-index: 2;
+      margin: 0;
+      font-size: 25px;
+      font-weight: 900;
+      line-height: 1.2;
+    }
+
+    .detail-body {
+      padding: 28px 30px 30px;
+    }
+
+    .detail-copy {
+      margin: 0;
+      color: #475467;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    .role-box {
+      margin-top: 22px;
+      padding: 18px 20px;
+      border-left: 4px solid #0078d4;
+      border-radius: 0 12px 12px 0;
+      background: #f5faff;
+    }
+
+    .role-box strong {
+      display: block;
+      margin-bottom: 6px;
+      color: #173d63;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .role-box p {
+      margin: 0;
+      color: #40586e;
+      font-size: 13.5px;
+      line-height: 1.6;
+    }
+
+    .bridge {
+      margin-top: 22px;
+      padding: 20px 22px;
+      border-radius: 14px;
+      background: #172a46;
+      color: #ffffff;
+      text-align: center;
+    }
+
+    .bridge strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .bridge p {
+      margin: 0 auto;
+      max-width: 760px;
+      color: rgba(255,255,255,.86);
+      font-size: 13.5px;
+      line-height: 1.6;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .experience-button { transition: none; }
+      .experience-button:hover { transform: none; }
+    }
+
+    @media (max-width: 760px) {
+      body {
+        padding: 18px 12px;
+      }
+
+      .experience-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .experience-button {
+        min-height: auto;
+      }
+
+      .detail-header,
+      .detail-body {
+        padding: 24px 21px;
+      }
+    }
+  </style>
 </head>
-<body><main class="card"><h1>Dynamic learning content</h1><p>This content is hosted outside Rise 360. If you can see this page in Rise, the embed is working.</p><p><strong>Version:</strong> 2.0 · Updated externally</p><button type="button" onclick="document.getElementById('message').textContent='Success! The interactive HTML is working.'">Test interaction</button><p id="message" role="status"></p></main></body>
+
+<body>
+
+  <div class="experience-wrapper">
+
+    <section class="intro">
+
+      <div class="intro-label">
+        Everyday AI experiences
+      </div>
+
+      <h1>
+        Understand where each experience fits
+      </h1>
+
+      <p>
+        Microsoft Copilot, Prebuilt agents, and Copilot Studio support
+        different levels of everyday productivity, task specialization,
+        and solution extension. Select each option to explore its role. Use Tab to move between options and Enter or Space to select.
+      </p>
+
+    </section>
+
+
+    <div
+      class="experience-grid"
+      role="group"
+      aria-label="Choose an AI experience"
+    >
+
+      <button
+        class="experience-button active"
+        type="button"
+        data-experience="copilot"
+        aria-pressed="true"
+      >
+        <span class="experience-number">01</span>
+
+        <span class="experience-title">
+          Microsoft Copilot
+        </span>
+
+        <span class="experience-subtitle">
+          Everyday work and productivity
+        </span>
+      </button>
+
+
+      <button
+        class="experience-button"
+        type="button"
+        data-experience="agents"
+        aria-pressed="false"
+      >
+        <span class="experience-number">02</span>
+
+        <span class="experience-title">
+          Prebuilt agents
+        </span>
+
+        <span class="experience-subtitle">
+          Specialized tasks and workflows
+        </span>
+      </button>
+
+
+      <button
+        class="experience-button"
+        type="button"
+        data-experience="studio"
+        aria-pressed="false"
+      >
+        <span class="experience-number">03</span>
+
+        <span class="experience-title">
+          Copilot Studio
+        </span>
+
+        <span class="experience-subtitle">
+          Extend and customize
+        </span>
+      </button>
+
+    </div>
+
+
+    <section
+      class="detail-panel"
+      aria-labelledby="detailTitle"
+    >
+
+      <div class="detail-header">
+
+        <span
+          class="detail-kicker"
+          id="detailKicker"
+        >
+          Core experience
+        </span>
+
+        <h2 id="detailTitle">
+          Microsoft Copilot
+        </h2>
+
+      </div>
+
+
+      <div class="detail-body">
+
+        <p
+          class="detail-copy"
+          id="detailCopy"
+        >
+          Microsoft Copilot provides the primary AI experience for everyday work.
+          It helps users access information, create content, reason over work
+          context, and move work forward from a familiar interface.
+        </p>
+
+
+        <div class="role-box">
+
+          <strong id="roleLabel">
+            Role in the experience
+          </strong>
+
+          <p id="roleText">
+            Use Microsoft Copilot when users need broad AI assistance across
+            everyday productivity and work activities.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <p id="selectionAnnouncement" class="sr-only" role="status" aria-atomic="true"></p>
+
+    <section class="bridge">
+
+      <strong>
+        The next question is how much control the solution needs.
+      </strong>
+
+      <p>
+        As customer needs become more specific, the decision shifts from which
+        experience to use toward how much customization, orchestration, and
+        technical control the solution requires.
+      </p>
+
+    </section>
+
+  </div>
+
+
+  <script>
+    const experiences = {
+
+      copilot: {
+        kicker: "Core experience",
+        title: "Microsoft Copilot",
+        copy:
+          "Microsoft Copilot provides the primary AI experience for everyday work. It helps users access information, create content, reason over work context, and move work forward from a familiar interface.",
+        roleLabel: "Role in the experience",
+        role:
+          "Use Microsoft Copilot when users need broad AI assistance across everyday productivity and work activities."
+      },
+
+      agents: {
+        kicker: "Purpose-built experiences",
+        title: "Prebuilt agents",
+        copy:
+          "Prebuilt agents extend the Copilot experience with capabilities designed for specific tasks, roles, or workflows. They help users move beyond general assistance into more focused work without requiring the organization to build every experience from the ground up.",
+        roleLabel: "Role in the experience",
+        role:
+          "Use prebuilt agents when an existing specialized experience already supports the customer’s workflow or task."
+      },
+
+      studio: {
+        kicker: "Extension and customization",
+        title: "Copilot Studio",
+        copy:
+          "Copilot Studio provides a low-code environment for creating and extending agents when the scenario requires custom knowledge, actions, workflows, connectors, or business logic.",
+        roleLabel: "Role in the experience",
+        role:
+          "Use Copilot Studio when the customer needs more control or customization than an existing Copilot or first-party agent experience provides."
+      }
+
+    };
+
+
+    const announcement = document.getElementById("selectionAnnouncement");
+
+    const buttons =
+      document.querySelectorAll(".experience-button");
+
+    const detailKicker =
+      document.getElementById("detailKicker");
+
+    const detailTitle =
+      document.getElementById("detailTitle");
+
+    const detailCopy =
+      document.getElementById("detailCopy");
+
+    const roleLabel =
+      document.getElementById("roleLabel");
+
+    const roleText =
+      document.getElementById("roleText");
+
+
+    function updateExperience(key) {
+
+      const data = experiences[key];
+
+      detailKicker.textContent =
+        data.kicker;
+
+      detailTitle.textContent =
+        data.title;
+
+      detailCopy.textContent =
+        data.copy;
+
+      roleLabel.textContent =
+        data.roleLabel;
+
+      roleText.textContent =
+        data.role;
+
+
+      announcement.textContent = `${data.title} selected. Details updated below.`;
+
+      buttons.forEach((button) => {
+
+        const selected =
+          button.dataset.experience === key;
+
+        button.classList.toggle(
+          "active",
+          selected
+        );
+
+        button.setAttribute(
+          "aria-pressed",
+          selected ? "true" : "false"
+        );
+
+      });
+
+    }
+
+
+    buttons.forEach((button) => {
+
+      button.addEventListener(
+        "click",
+        () => {
+          updateExperience(
+            button.dataset.experience
+          );
+        }
+      );
+
+    });
+  </script>
+
+</body>
 </html>
